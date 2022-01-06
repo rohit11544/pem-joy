@@ -32,6 +32,10 @@ app.use(
 
 app.use(cors());
 
+app.get("/", (req, res) => {
+  res.send("Hello and welcome to pemjoy");
+});
+
 app.use("/pem", pemRoutes);
 app.use("/customer", customerRoutes);
 app.use("/shop", shopRoutes);
