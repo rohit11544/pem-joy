@@ -7,6 +7,10 @@ import pemRoutes from "./routes/pem.js";
 import customerRoutes from "./routes/customer.js";
 import shopRoutes from "./routes/shop.js";
 
+// swagger
+import swaggerUi from "swagger-ui-express";
+import swaggerJsDoc from "swagger-jsdoc";
+
 // SMS Imports
 import twilio from "twilio";
 const accountSid = "AC38960bebc221b5d797c102e262e845b8";
@@ -38,6 +42,34 @@ app.use(
 
 app.use(cors());
 
+//---------------------------------Swagger Route-----------------------------------------
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: "Welcome API",
+      description: "Welcomes all the users to pem-joy application",
+      contact: {
+        name: "WBD group 18",
+      },
+    },
+    servers: ["http://localhost:5000"],
+  },
+  apis: ["app.js"],
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+/**
+ * @swagger
+ * /:
+ *  get:
+ *    description: visiting route
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ */
 app.get("/", (req, res) => {
   res.send("Hello and welcome to pemjoy");
 });
@@ -45,7 +77,9 @@ app.get("/", (req, res) => {
 app.use("/pem", pemRoutes);
 app.use("/customer", customerRoutes);
 app.use("/shop", shopRoutes);
+
 // -------------------------------PAYMENT ROUT----------------------------------
+
 app.post("/payment", cors(), async (req, res) => {
   let { amount, id } = req.body;
   try {
