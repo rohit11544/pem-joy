@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
+import adminRouter from "./routes/Admin.js";
 
 import pemRoutes from "./routes/pem.js";
 import customerRoutes from "./routes/customer.js";
@@ -46,6 +47,10 @@ app.use(
 app.use(cors());
 
 app.use(morgan("dev"));
+
+app.get("/", (req, res) => {
+  res.send("Welcome to PEM joy");
+});
 
 //---------------------------------Swagger Route-----------------------------------------
 
@@ -114,8 +119,7 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  *      type: string
  *      description: occupation
  *      example: 'Plumber'
-*/
-
+ */
 
 // -------------------- SCHEMA FOR CUSTOMER ------------------------
 /**
@@ -140,7 +144,7 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  *     type: string
  *     description: longitude of pem
  *     example: '30'
-*/
+ */
 
 // ------------------ SCHEMA FOR SHOP----------------
 /**
@@ -393,7 +397,7 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/definitions/pem' 
+ *        $ref: '#/definitions/pem'
  */
 
 // -------------------- DELETE SWAGGER FOR PEM ----------------------------
@@ -490,7 +494,7 @@ app.use("/pem", pemRoutes);
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/definitions/customer' 
+ *        $ref: '#/definitions/customer'
  */
 // -------------------- DELETE SWAGGER FOR CUSTOMER ----------------------------
 /**
@@ -584,7 +588,7 @@ app.use("/customer", customerRoutes);
  *     content:
  *      application/json:
  *       schema:
- *        $ref: '#/definitions/shop' 
+ *        $ref: '#/definitions/shop'
  */
 // -------------------- DELETE SWAGGER FOR SHOP ----------------------------
 /**
@@ -606,6 +610,8 @@ app.use("/customer", customerRoutes);
  *     description: success
  */
 app.use("/shop", shopRoutes);
+
+app.use("/admin", adminRouter);
 
 // -------------------------------PAYMENT ROUT----------------------------------
 // -------------------- SCHEMA FOR PAYMENT ------------------------
@@ -631,7 +637,7 @@ app.use("/shop", shopRoutes);
  *     type: string
  *     description: id of the person
  *     example: '6234578999232740c'
-*/
+ */
 
 // ------------------------ PAYMENT SWAGGER ----------------------------------------
 /**
