@@ -50,7 +50,7 @@ app.use(cors());
 app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
-  res.send("Welcome to PEM joy");
+  res.send("hello and Welcome to PEM joy application");
 });
 
 //---------------------------------Routes-----------------------------------------
